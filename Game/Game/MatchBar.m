@@ -48,7 +48,7 @@
             }
             temp.size = CGSizeMake(size.width / gridNum * 0.95, size.width / gridNum * 0.95);
             temp.position = CGPointMake((size.width / gridNum)* (0.5 + i) - (size.width/2) , 0);
-            temp.zPosition = 1;
+            //temp.zPosition = 1;
             [self.matchBarItems addObject:temp];
             [self.matchBar addChild:temp];
         }
@@ -90,7 +90,7 @@
             }
             temp.size = CGSizeMake(size.width / gridNum * 0.95, size.width / gridNum * 0.95);
             temp.position = CGPointMake((size.width / gridNum)* (0.5 + i) - (size.width/2) , 0);
-            temp.zPosition = 1;
+            //temp.zPosition = 1;
             [self.matchBarItems addObject:temp];
             [self.matchBar addChild:temp];
         }

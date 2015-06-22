@@ -20,8 +20,10 @@
 @property NSTimeInterval LastUpdateTime;
 @property NSTimeInterval timeSinceLastUpdate;
 @property CGFloat gameSpeed;
+@property int scoreIncre;
 @property (strong,nonatomic) NSMutableArray* matchBars;
 @property (strong,nonatomic) NSMutableArray* runningSuits;
 @property (strong,nonatomic) NSMutableArray* availableSuits;
+-(void)stage;
 
 @end

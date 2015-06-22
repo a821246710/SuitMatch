@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
+	<false/>
+	<key>IDESourceControlProjectIdentifier</key>
+	<string>0EA7D0F0-F772-4E61-AAE5-CC3570451F60</string>
+	<key>IDESourceControlProjectName</key>
+	<string>Game</string>
+	<key>IDESourceControlProjectOriginsDictionary</key>
+	<dict>
+		<key>3FCBE8ACA476F40FDF5D65D293C07BB78B0206F9</key>
+		<string>https://github.com/a821246710/SuitMatch.git</string>
+	</dict>
+	<key>IDESourceControlProjectPath</key>
+	<string>Game/Game.xcodeproj</string>
+	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
+	<dict>
+		<key>3FCBE8ACA476F40FDF5D65D293C07BB78B0206F9</key>
+		<string>../../..</string>
+	</dict>
+	<key>IDESourceControlProjectURL</key>
+	<string>https://github.com/a821246710/SuitMatch.git</string>
+	<key>IDESourceControlProjectVersion</key>
+	<integer>111</integer>
+	<key>IDESourceControlProjectWCCIdentifier</key>
+	<string>3FCBE8ACA476F40FDF5D65D293C07BB78B0206F9</string>
+	<key>IDESourceControlProjectWCConfigurations</key>
+	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>3FCBE8ACA476F40FDF5D65D293C07BB78B0206F9</string>
+			<key>IDESourceControlWCCName</key>
+			<string>SuitMatch</string>
+		</dict>
+	</array>
+</dict>
+</plist>

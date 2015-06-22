@@ -10,10 +10,10 @@
 
 @implementation Suits
 
-- (void)run{
-    SKAction *fadeBack = [SKAction fadeAlphaTo:1 duration:0];
-    SKAction *move = [SKAction moveBy:CGVectorMake(0, -self.suitSpeed) duration:self.gameScene.gameSpeed];
-    [self.suit runAction:[SKAction sequence:@[move,fadeBack]]];
+- (void)run:(CGFloat)mulTime{
+    
+    SKAction *move = [SKAction moveBy:CGVectorMake(0, -self.suitSpeed) duration:self.gameScene.gameSpeed*(mulTime/self.gameScene.gameSpeed)];
+    [self.suit runAction:[SKAction sequence:@[move]]];
 }
 
 - (void)match{
@@ -51,6 +51,9 @@
     Value = arc4random() % (self.gridNum);
     self.suit.position = CGPointMake((self.sceneSize.width / self.gridNum)* (0.5 + Value) , self.sceneSize.height + (self.sceneSize.width / self.gridNum));
     
+    SKAction *fadeBack = [SKAction fadeAlphaTo:1 duration:0];
+    [self.suit runAction:[SKAction sequence:@[fadeBack]]];
+
 }
 
 - (id)initWithSize:(CGSize)size gridNumber:(int)gridNum target:(GameScene*)gameScene
@@ -88,6 +91,8 @@
         
         Value = arc4random() % (gridNum);
         self.suit.position = CGPointMake((size.width / gridNum)* (0.5 + Value) , size.height + (size.width / gridNum));
+        
+        self.suit.zPosition = 1;
     }
     return self;
 }
@@ -127,6 +132,7 @@
         
         self.suit.position = CGPointMake(location.x , location.y);
         
+        self.suit.zPosition = 1;
     }
     return self;
 }

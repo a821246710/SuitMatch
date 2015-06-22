@@ -21,12 +21,13 @@
     
     /* Setup your scene here */
     self.LastUpdateTime = [[NSDate date] timeIntervalSinceReferenceDate];
-    self.judgeX = self.frame.size.width/32;
-    self.judgeY = 25;
-    self.gameSpeed = 0.1;
+    self.judgeX = self.frame.size.width/16;
+    self.judgeY = 50;
+    self.gameSpeed = 0.3;
     self.timeCounter = 0;
     self.suitCounter = 0;
-    self.suitSpawnTime = 1;
+    self.suitSpawnTime = 2;
+    self.scoreIncre = 10;
     self.gridNum = 4;
     self.maxSuits = 30;
     self.backgroundColor = [SKColor colorWithRed:1.0 green:0.7 blue:0.8 alpha:1];
@@ -79,11 +80,15 @@
     for (UITouch *touch in touches) {
         CGPoint location = [touch locationInNode:self];
         
-        SKSpriteNode *sprite = [SKSpriteNode spriteNodeWithImageNamed:@"4suits"];
+        SKSpriteNode *sprite = [SKSpriteNode spriteNodeWithImageNamed:@"flower"];
         
-        sprite.xScale = 0.1;
-        sprite.yScale = 0.1;
-        sprite.position = location;
+        sprite.xScale = 0.2;
+        sprite.yScale = 0.2;
+        int ValueR = arc4random() % (10);
+        int ValueX = arc4random() % (10);
+        int ValueY = arc4random() % (10);
+        sprite.zRotation = M_PI/ValueR;
+        sprite.position = CGPointMake(location.x + ValueX, location.y + ValueY) ;
         
         SKAction *action1 = [SKAction scaleBy:2  duration:0.2];
         SKAction *action2 = [SKAction fadeAlphaTo:0 duration:0.2];
@@ -107,23 +112,23 @@
     //printf("avalcount: %d     runcount: %d \n",self.availableSuits.count,self.runningSuits.count);
     
     if(self.timeCounter > self.gameSpeed && winOrLose==0){
-        self.timeCounter -= self.gameSpeed;
-        NSMutableArray *matchList = [[NSMutableArray alloc] init];
+        NSMutableArray *removeList = [[NSMutableArray alloc] init];
         for(Suits *aSuit in self.runningSuits){
             //printf("%lf\n",aSuit.suit.position.y);
             if(aSuit.suit.position.y > self.frame.size.height + self.frame.size.width/self.gridNum ||
                aSuit.suit.position.y < -self.frame.size.width/self.gridNum){
                 // MARK: - when Lost
                 [self.availableSuits addObject:aSuit];
-                [self.runningSuits removeObject:aSuit];
+                //[self.runningSuits removeObjectIdenticalTo:aSuit];
+                [removeList addObject:aSuit];
                 life -= 1;
                 lifeLabel.text = [NSString stringWithFormat:@"%d",life];
                 if(life <= 0){
                     [self removeAllActions];
                     winOrLose = 1;
-                    
+                    [[NSNotificationCenter defaultCenter] postNotificationName:@"loseGame" object:nil];
                 }
-                break;
+                //break;
             }
             for(MatchBar *aMatchBar in self.matchBars){
                 for(SKSpriteNode *aSNode in aMatchBar.matchBarItems){
@@ -135,26 +140,49 @@
                         // MARK: - when match
                         [aSuit match];
                         [self.availableSuits addObject:aSuit];
-                        [matchList addObject:aSuit];
-                        score += 10;
+                        [removeList addObject:aSuit];
+                        score += self.scoreIncre;
+                        [self stage];
                         scoreLbel.text = [NSString stringWithFormat:@"%d",score];
                     }
                 }
             }
-            [aSuit run];
+            [aSuit run:self.timeCounter];
         }
         
-        if(matchList.count > 0)
-            [self.runningSuits removeObjectsInArray:matchList];
+        self.timeCounter -= self.gameSpeed;
+        
+        if(removeList.count > 0){
+            //printf("avalcount: %d     runcount: %d   matchList: %d\n",self.availableSuits.count,self.runningSuits.count,matchList.count);
+            for(Suits *aSuit in removeList){
+                [self.runningSuits removeObjectIdenticalTo:aSuit];
+            }
+            //printf("avalcount: %d     runcount: %d   matchList: %d\n",self.availableSuits.count,self.runningSuits.count,matchList.count);
+        }
     }
     
     if(self.suitCounter > self.suitSpawnTime && self.availableSuits.count>0  && winOrLose==0){
         self.suitCounter -= self.suitSpawnTime;
-        Suits *aSuit = [self.availableSuits lastObject];
+        Suits *aSuit = [self.availableSuits firstObject];
         [aSuit reset];
         [self.runningSuits addObject:aSuit];
-        [self.availableSuits removeLastObject];
+        [self.availableSuits removeObjectIdenticalTo:aSuit];
     }
+}
+
+-(void)stage{
+    // stage 1
+    if(score <= 200){
+        self.gameSpeed -= 0.0075;
+        self.suitSpawnTime -= 0.05;
+    }
+    
+    // stage 2
+    if(score == 300){
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"breeding" object:nil];
+        self.scoreIncre = 20;
+    }
+    
 }
 
 @end

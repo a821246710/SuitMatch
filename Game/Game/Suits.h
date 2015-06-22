@@ -18,7 +18,7 @@
 @property CGSize sceneSize;
 @property int gridNum;
 @property (strong,nonatomic) GameScene* gameScene;
-- (void)run;
+- (void)run:(CGFloat)mulTime;
 - (void)match;
 - (void)reset;
 
